@@ -34,6 +34,8 @@
 -define:ENABLE_AUDIO
 -define:ENABLE_NAVMESH_CARVING
 -define:ENABLE_SINGLE_INSTANCE_BUILD_SETTING
+-define:DEVELOPMENT_BUILD
+-define:ENABLE_PROFILER
 'Assets/Done/Done_Scripts/Done_BGScroller.cs'
 'Assets/Done/Done_Scripts/Done_DestroyByBoundary.cs'
 'Assets/Done/Done_Scripts/Done_DestroyByContact.cs'

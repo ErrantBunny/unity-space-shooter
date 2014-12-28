@@ -39,28 +39,40 @@ public class GameController : MonoBehaviour {
 		pausedText.text = "";
 		UpdateScore ();
 		StartCoroutine (SpawnWaves ());
+		UpdatePause (false);
 	}
 
 	void Update() {
 		if (Input.GetKeyDown (KeyCode.Escape)) {
-			isPaused = !isPaused;
-			if (isPaused) {
-				Object[] objects = FindObjectsOfType (typeof(GameObject));
-				foreach (GameObject go in objects) {
-					go.SendMessage ("OnPauseGame", SendMessageOptions.DontRequireReceiver);
-				}
-			} else {
-				Object[] objects = FindObjectsOfType (typeof(GameObject));
-				foreach (GameObject go in objects) {
-					go.SendMessage ("OnResumeGame", SendMessageOptions.DontRequireReceiver);
-				}
-			}
+			UpdatePause(!isPaused);
 		}
 		if (restart) {
-			if (Input.GetKeyDown(KeyCode.R)) {
+			if (isRestartActionEnabled()) {
+				UpdatePause (false);
 				Application.LoadLevel (Application.loadedLevel);
-			} else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
-				Application.LoadLevel (Application.loadedLevel);
+			}
+		}
+	}
+
+	private bool isRestartActionEnabled() {
+		return (Input.GetKeyDown (KeyCode.R) ||
+		       (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began));
+	}
+
+	private void UpdatePause(bool newPause) {
+		if (newPause == isPaused) {
+			return;
+		}
+		isPaused = newPause;
+		if (isPaused) {
+			Object[] objects = FindObjectsOfType (typeof(GameObject));
+			foreach (GameObject go in objects) {
+				go.SendMessage ("OnPauseGame", SendMessageOptions.DontRequireReceiver);
+			}
+		} else {
+			Object[] objects = FindObjectsOfType (typeof(GameObject));
+			foreach (GameObject go in objects) {
+				go.SendMessage ("OnResumeGame", SendMessageOptions.DontRequireReceiver);
 			}
 		}
 	}
