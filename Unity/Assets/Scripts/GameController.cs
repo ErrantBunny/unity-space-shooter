@@ -66,13 +66,13 @@ public class GameController : MonoBehaviour {
 	void OnPauseGame() {
 		Time.timeScale = 0.0f;
 		audio.Pause();
-		gameOverText.text = "Paused";
+		pausedText.text = "Paused";
 	}
 
 	void OnResumeGame() {
 		Time.timeScale = 1.0f;
 		audio.Play();
-		gameOverText.text = "";
+		pausedText.text = "";
 	}
 
 	IEnumerator SpawnWaves() {
@@ -91,6 +91,7 @@ public class GameController : MonoBehaviour {
 			if (gameOver) {
 				restartText.text = "Press 'R' to Restart";
 				restart = true;
+				gameOverText.text = "Game Over";
 				break;
 			}
 		}
