@@ -49,8 +49,14 @@ public class GameController : MonoBehaviour {
 	}
 
 	void Update() {
-		if (Input.GetKeyDown (KeyCode.Escape)) {
-			UpdatePause(!isPaused);
+		if (isPaused) {
+			if (Input.GetButtonDown("Cancel")) {
+				UpdatePause (false);
+			}
+		} else {
+			if (Input.GetButtonDown("Cancel")) {
+				UpdatePause (true);
+			}
 		}
 		if (restart) {
 			if (isRestartActionEnabled()) {
@@ -61,8 +67,18 @@ public class GameController : MonoBehaviour {
 	}
 
 	private bool isRestartActionEnabled() {
-		return (Input.GetKeyDown (KeyCode.R) ||
-		       (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began));
+		if (Input.GetKeyDown (KeyCode.R)) {
+			return true;
+		}
+		if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began) {
+			return true;
+		}
+#if UNITY_ANDROID
+		if (Input.GetButton("Submit")) {
+			return true;
+		}
+#endif
+		return false;
 	}
 
 	private void UpdatePause(bool newPause) {
