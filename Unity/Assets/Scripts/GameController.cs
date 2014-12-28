@@ -2,10 +2,18 @@
 using System.Collections;
 using UnityEngine.UI;
 
+[System.Serializable]
+public class Boundary {
+	
+	public float xMin, xMax, zMin, zMax;
+	
+}
+
 public class GameController : MonoBehaviour {
 
+	public Boundary boundary;
+
 	public GameObject hazard;
-	public Vector3 spawnValues;
 	public int hazardCount;
 	public float spawnWaitSeconds;
 	public float startWaitSeconds;
@@ -42,13 +50,16 @@ public class GameController : MonoBehaviour {
 		UpdateScore ();
 		StartCoroutine (SpawnWaves ());
 		UpdatePause (false);
-
+		UpdateBoundary ();
 #if UNITY_ANDROID
 		restartMessage = "Touch to Restart";
 #endif
 	}
 
 	void Update() {
+
+		UpdateBoundary ();
+
 		if (isPaused) {
 			if (Input.GetButtonDown("Cancel")) {
 				UpdatePause (false);
@@ -117,7 +128,12 @@ public class GameController : MonoBehaviour {
 
 		while (true) {
 			for (int i = 0; i < hazardCount; i++) {
-				Vector3 spawnPosition = new Vector3 (Random.Range (-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
+				Boundary hazardBoundary = getHazardStartBoundary();
+				float xMin = hazardBoundary.xMin;
+				float xMax = hazardBoundary.xMax;
+				float zEntry = hazardBoundary.zMax;
+
+				Vector3 spawnPosition = new Vector3 (Random.Range (xMin, xMax), 0.0f, zEntry);
 				Quaternion spawnRotation = Quaternion.identity;
 				Instantiate (hazard, spawnPosition, spawnRotation);
 				yield return new WaitForSeconds(spawnWaitSeconds);
@@ -135,5 +151,36 @@ public class GameController : MonoBehaviour {
 
 	void UpdateScore() {
 		scoreText.text = "Score: " + score;
+	}
+
+	void UpdateBoundary() {
+		Camera cam = Camera.main;
+		if (cam == null) {
+			return;
+		}
+		boundary.zMin = -cam.orthographicSize + cam.transform.position.z;
+		boundary.zMax = cam.orthographicSize + cam.transform.position.z;
+		float horizontalSize = cam.aspect * cam.orthographicSize;
+		boundary.xMin = -horizontalSize + cam.transform.position.x;;
+		boundary.xMax = horizontalSize + cam.transform.position.x;
+	}
+
+	private Vector3 getTouchTargetPosition() {
+		float x = Input.GetTouch (0).position.x;
+		float y = Input.GetTouch (0).position.y;
+		Debug.Log ("getTouchTargetPosition() x: " + x + " y: " + y);
+		Vector3 screenVector = new Vector3 (x, y, 0.0f);
+		Vector3 targetVector = Camera.current.ScreenToWorldPoint (screenVector);
+		return targetVector;
+	}
+
+	
+	private Boundary getHazardStartBoundary() {
+		Boundary value = new Boundary ();
+		value.xMin = boundary.xMin + 1.0f;
+		value.xMax = boundary.xMax - 1.0f;
+		value.zMin = boundary.zMax + 2.0f;
+		value.zMax = boundary.zMax + 2.0f;
+		return value;
 	}
 }

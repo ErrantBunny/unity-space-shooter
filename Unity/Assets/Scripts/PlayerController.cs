@@ -1,17 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[System.Serializable]
-public class Boundary {
-
-	public float xMin, xMax, zMin, zMax;
-
-}
-
 public class PlayerController : MonoBehaviour {
 
 	public float speed;
-	public Boundary boundary;
 	public float tilt;
 
 	public GameObject shot;
@@ -67,10 +59,12 @@ public class PlayerController : MonoBehaviour {
 		Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
 		rigidbody.velocity = movement * speed;
 
-		float xVel = Mathf.Clamp (rigidbody.position.x, boundary.xMin, boundary.xMax);
-		float yVel = 0.0f;
-		float zVel = Mathf.Clamp (rigidbody.position.z, boundary.zMin, boundary.zMax);
-		rigidbody.position = new Vector3 (xVel, yVel, zVel);
+		Boundary boundary = getPlayerBoundary();
+
+		float xPos = Mathf.Clamp (rigidbody.position.x, boundary.xMin, boundary.xMax);
+		float yPos = 0.0f;
+		float zPos = Mathf.Clamp (rigidbody.position.z, boundary.zMin, boundary.zMax);
+		rigidbody.position = new Vector3 (xPos, yPos, zPos);
 
 		rigidbody.rotation = Quaternion.Euler (0.0f, 0.0f, -rigidbody.velocity.x * tilt);
 	}
@@ -94,5 +88,14 @@ public class PlayerController : MonoBehaviour {
 	private float getMoveVerticalTouch() {
 		float diff = Input.GetTouch (0).position.y - rigidbody.position.y;
 		return Mathf.Sign(diff);
+	}
+
+	private Boundary getPlayerBoundary() {
+		Boundary value = new Boundary ();
+		value.xMin = gameController.boundary.xMin + 1.0f;
+		value.xMax = gameController.boundary.xMax - 1.0f;
+		value.zMin = gameController.boundary.zMin + 1.0f;
+		value.zMax = gameController.boundary.zMax - 4.0f;
+		return value;
 	}
 }
