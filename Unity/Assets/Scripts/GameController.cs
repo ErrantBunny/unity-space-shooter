@@ -59,6 +59,8 @@ public class GameController : MonoBehaviour {
 		if (restart) {
 			if (Input.GetKeyDown(KeyCode.R)) {
 				Application.LoadLevel (Application.loadedLevel);
+			} else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
+				Application.LoadLevel (Application.loadedLevel);
 			}
 		}
 	}
