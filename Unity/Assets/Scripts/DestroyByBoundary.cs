@@ -29,9 +29,6 @@ public class DestroyByBoundary : MonoBehaviour {
 		float x = boundary.xMax - boundary.xMin;
 		float y = 1.0f;
 		float z = boundary.zMax - boundary.xMin;
-		gameController.scoreText.text = "x: " + x;
-		gameController.pausedText.text = "y: " + y;
-		gameController.gameOverText.text = "z: " + z;
 		boundaryTransform.localScale.Set (x, y, z);
 	}
 
