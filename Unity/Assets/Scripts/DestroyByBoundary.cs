@@ -29,7 +29,7 @@ public class DestroyByBoundary : MonoBehaviour {
 		float x = boundary.xMax - boundary.xMin;
 		float y = 1.0f;
 		float z = boundary.zMax - boundary.xMin;
-		boundaryTransform.localScale.Set (x, y, z);
+		boundaryTransform.localScale = new Vector3 (x, y, z);
 	}
 
 	private Boundary getDestroyBoundary() {

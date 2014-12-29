@@ -173,7 +173,6 @@ public class GameController : MonoBehaviour {
 		Vector3 targetVector = Camera.current.ScreenToWorldPoint (screenVector);
 		return targetVector;
 	}
-
 	
 	private Boundary getHazardStartBoundary() {
 		Boundary value = new Boundary ();
