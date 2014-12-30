@@ -33,8 +33,6 @@ application
 ADDED from AndroidManifest.xml:4:3
 	android:label
 		ADDED from AndroidManifest.xml:4:50
-	android:debuggable
-		ADDED from AndroidManifest.xml:4:139
 	android:icon
 		ADDED from AndroidManifest.xml:4:16
 	android:isGame
@@ -99,29 +97,29 @@ ADDED from AndroidManifest.xml:17:3
 		ADDED from AndroidManifest.xml:17:58
 	android:name
 		ADDED from AndroidManifest.xml:17:17
-uses-feature#android.hardware.touchscreen
-ADDED from AndroidManifest.xml:18:3
-	android:required
-		ADDED from AndroidManifest.xml:18:61
-	android:name
-		ADDED from AndroidManifest.xml:18:17
 uses-permission#android.permission.INTERNET
+ADDED from AndroidManifest.xml:18:3
+	android:name
+		ADDED from AndroidManifest.xml:18:20
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 ADDED from AndroidManifest.xml:19:3
 	android:name
 		ADDED from AndroidManifest.xml:19:20
-uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+uses-feature#android.hardware.touchscreen
 ADDED from AndroidManifest.xml:20:3
+	android:required
+		ADDED from AndroidManifest.xml:20:61
 	android:name
-		ADDED from AndroidManifest.xml:20:20
+		ADDED from AndroidManifest.xml:20:17
 uses-feature#android.hardware.touchscreen.multitouch
+ADDED from AndroidManifest.xml:21:3
+	android:required
+		ADDED from AndroidManifest.xml:21:72
+	android:name
+		ADDED from AndroidManifest.xml:21:17
+uses-feature#android.hardware.touchscreen.multitouch.distinct
 ADDED from AndroidManifest.xml:22:3
 	android:required
-		ADDED from AndroidManifest.xml:22:72
+		ADDED from AndroidManifest.xml:22:81
 	android:name
 		ADDED from AndroidManifest.xml:22:17
-uses-feature#android.hardware.touchscreen.multitouch.distinct
-ADDED from AndroidManifest.xml:23:3
-	android:required
-		ADDED from AndroidManifest.xml:23:81
-	android:name
-		ADDED from AndroidManifest.xml:23:17
