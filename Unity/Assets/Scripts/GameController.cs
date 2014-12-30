@@ -29,7 +29,7 @@ public class GameController : MonoBehaviour {
 
 	private bool isPaused = false;
 	
-	private string restartMessage = "Press 'R' to Restart";
+	private string restartMessage;
 	
 	public void AddScore(int scoreValue) {
 		score += scoreValue;
@@ -51,8 +51,9 @@ public class GameController : MonoBehaviour {
 		StartCoroutine (SpawnWaves ());
 		UpdatePause (false);
 		UpdateBoundary ();
+		restartMessage = "Press 'R' to Restart";
 #if UNITY_ANDROID
-		restartMessage = "Touch to Restart";
+		restartMessage = "Touch screen or press button to restart";
 #endif
 	}
 
